@@ -4,6 +4,7 @@ package com.pop4enz.popstarter.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 public class Campaign {
@@ -34,7 +35,7 @@ public class Campaign {
     private int backersCount;
     @SerializedName("expiresAt")
     @Expose
-    private String expiresAt;
+    private Date expiresAt;
     @SerializedName("creator")
     @Expose
     private User creator;
@@ -47,7 +48,7 @@ public class Campaign {
 
     public Campaign(Integer id, String title, String categoryName,
                     String description, String videoLink, float goal,
-                    float currentMoney, int backersCount, String expiresAt,
+                    float currentMoney, int backersCount, Date expiresAt,
                     User creator, List<CampaignImage> images) {
         this.id = id;
         this.title = title;
@@ -126,11 +127,11 @@ public class Campaign {
         this.backersCount = backersCount;
     }
 
-    public String getExpiresAt() {
+    public Date getExpiresAt() {
         return expiresAt;
     }
 
-    public void setExpiresAt(String expiresAt) {
+    public void setExpiresAt(Date expiresAt) {
         this.expiresAt = expiresAt;
     }
 

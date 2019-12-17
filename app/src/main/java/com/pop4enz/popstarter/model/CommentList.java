@@ -14,6 +14,10 @@ public class CommentList implements Serializable {
         this.comments = comments;
     }
 
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
+
     public List<Comment> getComments() {
         return comments;
     }

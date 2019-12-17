@@ -10,25 +10,25 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.fragments.CommentsFragment;
 import com.pop4enz.popstarter.fragments.DescriptionFragment;
+import com.pop4enz.popstarter.model.Comment;
 import com.pop4enz.popstarter.model.CommentList;
 
 public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
 
-    private String description;
-    private CommentList comments;
-
     DescriptionFragment descriptionFragment;
+    CommentsFragment commentsFragment;
 
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[] { R.string.descriptionText, R.string.updatesText, R.string.commentsText };
+            new int[] { R.string.DESCRIPTION_TEXT, R.string.UPDATES_TEXT, R.string.COMMENTS_TEXT};
 
     private final Context mContext;
 
     public CampaignTabsPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
-        descriptionFragment = DescriptionFragment.newInstance(description);
+        descriptionFragment = DescriptionFragment.newInstance(null);
+        commentsFragment = CommentsFragment.newInstance(null);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return DescriptionFragment.newInstance("No updates yet :(");
             case 2:
-                return CommentsFragment.newInstance(comments);
+                return commentsFragment;
             default:
                 return null;
         }
@@ -51,21 +51,17 @@ public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
         return mContext.getResources().getString(TAB_TITLES[position]);
     }
 
-    public String getDescription() {
-        return description;
-    }
 
     public void setDescription(String description) {
-        this.description = description;
         descriptionFragment.setDescription(description);
     }
 
-    public CommentList getComments() {
-        return comments;
+    public void setComments(CommentList comments) {
+        commentsFragment.setComments(comments);
     }
 
-    public void setComments(CommentList comments) {
-        this.comments = comments;
+    public void addComment(Comment comment) {
+        commentsFragment.addComment(comment);
     }
 
     @Override

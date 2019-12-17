@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pop4enz.popstarter.R;
+import com.pop4enz.popstarter.adapter.CommentsAdapter;
+import com.pop4enz.popstarter.model.Comment;
 import com.pop4enz.popstarter.model.CommentList;
 
 import java.util.Objects;
@@ -30,6 +34,8 @@ public class CommentsFragment extends Fragment {
     private static final String ARG_PARAM1 = "comments";
 
     private RecyclerView commentsRv;
+
+    private CommentsAdapter commentsAdapter = new CommentsAdapter();
 
     private CommentList comments;
 
@@ -61,8 +67,29 @@ public class CommentsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         commentsRv = Objects.requireNonNull(getView()).findViewById(R.id.commentsRv);
+        commentsRv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        commentsRv.setAdapter(commentsAdapter);
+        if (comments != null) {
+            commentsAdapter.setItems(comments.getComments());
+        }
+    }
+
+    public void setComments(CommentList comments) {
+        Bundle args = new Bundle();
+        this.comments = comments;
+        args.putSerializable(ARG_PARAM1, comments);
+        this.setArguments(args);
+        commentsAdapter.setItems(comments.getComments());
+    }
+
+    public void addComment(Comment comment) {
+        Bundle args = new Bundle();
+        this.comments.addComment(comment);
+        args.putSerializable(ARG_PARAM1, comments);
+        this.setArguments(args);
+        commentsAdapter.addItem(comment);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -73,7 +100,7 @@ public class CommentsFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;

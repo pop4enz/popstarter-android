@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Popstarter</string>
-    <string name="descriptionText">Description</string>
-    <string name="updatesText">Updates</string>
-    <string name="commentsText">Comments</string>
+    <string name="DESCRIPTION_TEXT">Description</string>
+    <string name="UPDATES_TEXT">Updates</string>
+    <string name="COMMENTS_TEXT">Comments</string>
+    <string name="GOAL_TEXT">%.1f pledged out of %.1f goal</string>
+    <string name="GOALTV_TEXT">%</string>
+    <string name="BACK_CAMPAIGN">Back this campaign</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

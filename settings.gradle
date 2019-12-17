@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='CommentsRX'
+rootProject.name='Popstarter'

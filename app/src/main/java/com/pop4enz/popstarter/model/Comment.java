@@ -1,11 +1,10 @@
 package com.pop4enz.popstarter.model;
 
-import android.os.Parcelable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Comment implements Serializable {
     @SerializedName("id")
@@ -13,10 +12,10 @@ public class Comment implements Serializable {
     private Integer id;
     @SerializedName("createdAt")
     @Expose
-    private String createdAt;
+    private Date createdAt;
     @SerializedName("updatedAt")
     @Expose
-    private String updatedAt;
+    private Date updatedAt;
     @SerializedName("content")
     @Expose
     private String content;
@@ -36,7 +35,7 @@ public class Comment implements Serializable {
     public Comment() {
     }
 
-    public Comment(Integer id, String createdAt, String updatedAt, String content, User user, int countLikes, int countDislikes, byte state) {
+    public Comment(Integer id, Date createdAt, Date updatedAt, String content, User user, int countLikes, int countDislikes, byte state) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -55,19 +54,19 @@ public class Comment implements Serializable {
         this.id = id;
     }
 
-    public String getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(String updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
