@@ -1,12 +1,28 @@
 <resources>
     <string name="app_name">Popstarter</string>
-    <string name="DESCRIPTION_TEXT">Description</string>
-    <string name="UPDATES_TEXT">Updates</string>
-    <string name="COMMENTS_TEXT">Comments</string>
+    <string name="DESCRIPTION_TAB">Description</string>
+    <string name="REWARDS_TAB">Rewards</string>
+    <string name="COMMENTS_TAB">Comments</string>
     <string name="GOAL_TEXT">%.1f pledged out of %.1f goal</string>
     <string name="GOALTV_TEXT">%</string>
     <string name="BACK_CAMPAIGN">Back this campaign</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="SUPPORT">Support</string>
+    <string name="EDIT">Edit</string>
+    <string name="DELETE">Delete</string>
+    <string name="drawer_item_home">Home</string>
+    <string name="drawer_item_sign_in">Sign in</string>
+    <string name="drawer_item_sign_up">Sign up</string>
+    <string name="drawer_item_profile">Profile</string>
+    <string name="drawer_item_logout">Logout</string>
+    <string name="welcomeLogin">Welcome to the Popstarter, type your username/email and password to log in.</string>
+    <string name="welcomeSignUp">Welcome to the Popstarter, put your information and register!</string>
+    <string name="usernameLogin">Username or E-mail:</string>
+    <string name="username">Username:</string>
+    <string name="first_name">First Name:</string>
+    <string name="last_name">Last Name:</string>
+    <string name="email">E-mail:</string>
+    <string name="password">Password:</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="TOKEN">token</string>
 </resources>

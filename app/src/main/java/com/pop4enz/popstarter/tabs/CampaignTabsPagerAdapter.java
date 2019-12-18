@@ -10,17 +10,21 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.fragments.CommentsFragment;
 import com.pop4enz.popstarter.fragments.DescriptionFragment;
+import com.pop4enz.popstarter.fragments.RewardsFragment;
 import com.pop4enz.popstarter.model.Comment;
 import com.pop4enz.popstarter.model.CommentList;
+import com.pop4enz.popstarter.model.Reward;
+import com.pop4enz.popstarter.model.RewardList;
 
 public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
 
     DescriptionFragment descriptionFragment;
     CommentsFragment commentsFragment;
+    RewardsFragment rewardsFragment;
 
     @StringRes
     private static final int[] TAB_TITLES =
-            new int[] { R.string.DESCRIPTION_TEXT, R.string.UPDATES_TEXT, R.string.COMMENTS_TEXT};
+            new int[] { R.string.DESCRIPTION_TAB, R.string.REWARDS_TAB, R.string.COMMENTS_TAB};
 
     private final Context mContext;
 
@@ -29,6 +33,7 @@ public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
         descriptionFragment = DescriptionFragment.newInstance(null);
         commentsFragment = CommentsFragment.newInstance(null);
+        rewardsFragment = RewardsFragment.newInstance(null);
     }
 
     @Override
@@ -37,7 +42,7 @@ public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return descriptionFragment;
             case 1:
-                return DescriptionFragment.newInstance("No updates yet :(");
+                return rewardsFragment;
             case 2:
                 return commentsFragment;
             default:
@@ -62,6 +67,14 @@ public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
 
     public void addComment(Comment comment) {
         commentsFragment.addComment(comment);
+    }
+
+    public void setRewards(RewardList rewards) {
+        rewardsFragment.setRewards(rewards);
+    }
+
+    public void addReward(Reward reward) {
+        rewardsFragment.addReward(reward);
     }
 
     @Override

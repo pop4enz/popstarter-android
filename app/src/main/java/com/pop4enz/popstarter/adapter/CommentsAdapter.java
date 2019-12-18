@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.model.Comment;
+import com.pop4enz.popstarter.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,21 +59,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         notifyDataSetChanged();
     }
 
-    private void loadImage(String imagePath, ImageView imageView) {
-        if (imagePath != null && !imagePath.isEmpty()) {
-            loadImageInto(imagePath, imageView);
-        } else {
-            loadImageInto("https://sun9-14.userapi.com/c854120/v854120120/179b7e/5MAug30XaaM.jpg", imageView);
-        }
-    }
-
-    private void loadImageInto(String uri, ImageView imageView) {
-        Picasso.get().load(uri).into(imageView);
-    }
-
     class CommentViewHolder extends RecyclerView.ViewHolder {
-        private static final String FULL_TIME_FORMAT ="EEE MMM dd HH:mm:ss";
-        private static final String MONTH_DAY_FORMAT = "MMM d";
 
         TextView name;
         TextView username;
@@ -95,13 +81,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     .getUser().getFirst_name(), comment.getUser().getLast_name()));
             username.setText(String.format("@%s", comment.getUser().getUsername()));
             content.setText(comment.getContent());
-            loadImage(comment.getUser().getPicture(), image);
-            createdAt.setText(getFormattedDate(comment.getCreatedAt()));
-        }
-
-        private String getFormattedDate(Date rawDate) {
-            SimpleDateFormat utcFormat = new SimpleDateFormat(FULL_TIME_FORMAT, Locale.ROOT);
-            return utcFormat.format(rawDate);
+            Utils.loadImage(comment.getUser().getPicture(), image);
+            createdAt.setText(Utils.getFormattedDate(comment.getCreatedAt()));
         }
 
     }

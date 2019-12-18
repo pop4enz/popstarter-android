@@ -44,5 +44,7 @@ dependencies {
     implementation 'com.github.NaikSoftware:StompProtocolAndroid:1.6.4'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.synnapps:carouselview:0.1.5'
-    implementation "io.noties.markwon:core:4.2.0"
+    implementation 'io.noties.markwon:core:4.2.0'
+    implementation 'com.mikepenz:materialdrawer:6.1.2'
+    implementation group: 'info.androidhive', name: 'fontawesome', version: '0.0.5'
 }

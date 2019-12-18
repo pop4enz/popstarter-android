@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.pop4enz.commentsrx", appContext.getPackageName());
+        assertEquals("com.pop4enz.popstarter", appContext.getPackageName());
     }
 }
