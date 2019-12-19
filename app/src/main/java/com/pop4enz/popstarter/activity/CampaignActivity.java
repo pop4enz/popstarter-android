@@ -124,6 +124,7 @@ public class CampaignActivity extends NavigationActivity
         wsLifecycleDispose();
         campaignRequestDispose();
         commentRequestDispose();
+        rewardsRequestDispose();
         wsDispose();
         stompClient.disconnect();
     }

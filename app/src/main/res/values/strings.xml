@@ -32,5 +32,4 @@
     <string name="goal">Funding goal:</string>
     <string name="date">Expiration date:</string>
     <string name="save">Save</string>
-    <string name="TOKEN">token</string>
 </resources>

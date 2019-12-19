@@ -1,24 +1,42 @@
 package com.pop4enz.popstarter.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
 public class CreateCampaignRequest {
 
+    @SerializedName("title")
+    @Expose
     private String title;
+    @SerializedName("category")
+    @Expose
     private String category;
+    @SerializedName("description")
+    @Expose
     private String description;
+    @SerializedName("videoLink")
+    @Expose
     private String videoLink;
+    @SerializedName("goal")
+    @Expose
     private float goal;
-    private Date expiresAt;
-    List<String> images;
+    @SerializedName("expiresAt")
+    @Expose
+    private String expiresAt;
+    @SerializedName("images")
+    @Expose
+    private List<String> images;
 
     public CreateCampaignRequest() {
     }
 
     public CreateCampaignRequest(String title, String category,
                                  String description, String videoLink,
-                                 float goal, Date expiresAt, List<String> images) {
+                                 float goal, String expiresAt, List<String> images) {
         this.title = title;
         this.category = category;
         this.description = description;
@@ -68,11 +86,11 @@ public class CreateCampaignRequest {
         this.goal = goal;
     }
 
-    public Date getExpiresAt() {
+    public String getExpiresAt() {
         return expiresAt;
     }
 
-    public void setExpiresAt(Date expiresAt) {
+    public void setExpiresAt(String expiresAt) {
         this.expiresAt = expiresAt;
     }
 

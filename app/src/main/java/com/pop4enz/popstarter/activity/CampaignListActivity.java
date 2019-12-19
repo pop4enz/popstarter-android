@@ -10,10 +10,12 @@ import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.adapter.MiniCampaignAdapter;
 import com.pop4enz.popstarter.model.MiniCampaign;
 import com.pop4enz.popstarter.retrofit.CallableCampaignListRequest;
+import com.pop4enz.popstarter.utils.Utils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
@@ -36,9 +38,29 @@ public class CampaignListActivity extends NavigationActivity implements MiniCamp
         campaignListRv.setLayoutManager(new LinearLayoutManager(this));
         campaignListRv.setAdapter(miniCampaignAdapter);
 
-        campaignRequestDisposable = Observable.fromCallable(new CallableCampaignListRequest())
+        Observable.fromCallable(new CallableCampaignListRequest())
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe((Consumer<List<MiniCampaign>>) this::mapCampaigns);
+                .subscribe(new Observer() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        mapCampaigns((List<MiniCampaign>) o);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Utils.Toast(CampaignListActivity.this, e.getMessage());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     @Override

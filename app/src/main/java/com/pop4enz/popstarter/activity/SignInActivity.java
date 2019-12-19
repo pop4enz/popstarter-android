@@ -52,7 +52,7 @@ public class SignInActivity extends NavigationActivity implements View.OnClickLi
                                                        Response<TokenResponse> response) {
                                     if (response.raw().isSuccessful()) {
                                         TokenResponse token = response.body();
-                                        storage.edit().putString(getString(R.string.TOKEN),
+                                        storage.edit().putString(NavigationActivity.TOKEN,
                                                 token.getAccessToken()).apply();
                                         redirectHome();
                                     } else if (response.raw().code() == 401) {

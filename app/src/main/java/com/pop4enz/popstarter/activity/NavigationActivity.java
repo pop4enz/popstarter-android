@@ -46,6 +46,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
     public static final String USER_FNAME = "userFName";
     public static final String USER_LNAME = "userLName";
     public static final String USER_ID = "userId";
+    public static final String TOKEN = "token";
 
     private Drawer drawer;
     private Boolean isUser;
@@ -63,15 +64,19 @@ public abstract class NavigationActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
+    protected String getToken() {
+        return Utils.buildToken(storage.getString(TOKEN, null));
+    }
+
     private void setIsUser() {
-        isUser = storage.getString(getString(R.string.TOKEN), null) != null;
+        isUser = storage.getString(TOKEN, null) != null;
         if (isUser && storage.getString(USER_NAME, null) == null) {
-            getUserInfo(storage.getString(getString(R.string.TOKEN), null));
+            getUserInfo();
         }
     }
 
-    private void getUserInfo(String token) {
-        RetrofitService.getInstance().getApiRequests().getUserInfo(Utils.buildToken(token))
+    private void getUserInfo() {
+        RetrofitService.getInstance().getApiRequests().getUserInfo(getToken())
                 .enqueue(new Callback<UserInfo>() {
             @Override
             public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
