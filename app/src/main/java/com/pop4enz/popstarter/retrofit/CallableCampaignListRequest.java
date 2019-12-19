@@ -18,7 +18,7 @@ public class CallableCampaignListRequest implements Callable {
     public Object call() {
         try {
             Call<List<MiniCampaign>> call = RetrofitService.getInstance()
-                    .getJSONApi().getAllCampaigns();
+                    .getApiRequests().getAllCampaigns();
             return call.execute().body();
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());

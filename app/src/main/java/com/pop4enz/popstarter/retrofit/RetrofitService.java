@@ -22,7 +22,7 @@ public class RetrofitService {
         return mInstance;
     }
 
-    public JSONPlaceHolderApi getJSONApi() {
-        return mRetrofit.create(JSONPlaceHolderApi.class);
+    public ApiRequests getApiRequests() {
+        return mRetrofit.create(ApiRequests.class);
     }
 }

@@ -1,6 +1,5 @@
 package com.pop4enz.popstarter.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +22,8 @@ import io.reactivex.schedulers.Schedulers;
 public class CampaignListActivity extends NavigationActivity implements MiniCampaignAdapter.OnCampaignListener {
 
     private RecyclerView campaignListRv;
-    private MiniCampaignAdapter miniCampaignAdapter = new MiniCampaignAdapter(this);
+    private MiniCampaignAdapter miniCampaignAdapter =
+            new MiniCampaignAdapter(this);
     private Disposable campaignRequestDisposable;
 
 

@@ -13,6 +13,7 @@
     <string name="drawer_item_sign_in">Sign in</string>
     <string name="drawer_item_sign_up">Sign up</string>
     <string name="drawer_item_profile">Profile</string>
+    <string name="drawer_item_create_campaign">Create campaign</string>
     <string name="drawer_item_logout">Logout</string>
     <string name="welcomeLogin">Welcome to the Popstarter, type your username/email and password to log in.</string>
     <string name="welcomeSignUp">Welcome to the Popstarter, put your information and register!</string>
@@ -24,5 +25,12 @@
     <string name="password">Password:</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
+    <string name="title">Title:</string>
+    <string name="category">Category:</string>
+    <string name="description">Description:</string>
+    <string name="images">Image links:</string>
+    <string name="goal">Funding goal:</string>
+    <string name="date">Expiration date:</string>
+    <string name="save">Save</string>
     <string name="TOKEN">token</string>
 </resources>

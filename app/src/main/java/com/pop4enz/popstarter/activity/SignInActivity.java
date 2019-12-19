@@ -19,10 +19,6 @@ import retrofit2.Response;
 
 public class SignInActivity extends NavigationActivity implements View.OnClickListener {
 
-    public static final String BAD_CREDENTIALS = "Wrong E-mail or passwordET!";
-    public static final String ERROR = "Something went wrong :(";
-    public static final String LOGIN_SUCCESS = "You successfully logged on!";
-
     private EditText usernameET;
     private EditText passwordET;
     private Button signInButton;
@@ -49,7 +45,7 @@ public class SignInActivity extends NavigationActivity implements View.OnClickLi
             if (Utils.isNotEmpty(username) && Utils.isNotEmpty(password)) {
                 try {
                     RetrofitService.getInstance()
-                            .getJSONApi().signInRequest(new LoginRequest(username, password))
+                            .getApiRequests().signInRequest(new LoginRequest(username, password))
                             .enqueue(new Callback<TokenResponse>() {
                                 @Override
                                 public void onResponse(Call<TokenResponse> call,
@@ -60,16 +56,16 @@ public class SignInActivity extends NavigationActivity implements View.OnClickLi
                                                 token.getAccessToken()).apply();
                                         redirectHome();
                                     } else if (response.raw().code() == 401) {
-                                        Utils.Toast(SignInActivity.this, BAD_CREDENTIALS);
+                                        Utils.Toast(SignInActivity.this, Utils.BAD_CREDENTIALS);
                                     } else {
-                                        Utils.Toast(SignInActivity.this, ERROR);
+                                        Utils.Toast(SignInActivity.this, Utils.ERROR);
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<TokenResponse> call, Throwable t) {
                                     t.printStackTrace();
-                                    Utils.Toast(SignInActivity.this, ERROR);
+                                    Utils.Toast(SignInActivity.this, Utils.ERROR);
                                 }
                             });
                 } catch (Throwable e) {
@@ -80,7 +76,7 @@ public class SignInActivity extends NavigationActivity implements View.OnClickLi
     }
 
     private void redirectHome() {
-        Utils.Toast(SignInActivity.this, LOGIN_SUCCESS);
+        Utils.Toast(SignInActivity.this, Utils.LOGIN_SUCCESS);
         Intent intent = new Intent(this, CampaignListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

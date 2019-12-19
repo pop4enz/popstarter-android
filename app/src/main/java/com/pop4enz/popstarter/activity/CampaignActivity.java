@@ -1,6 +1,5 @@
 package com.pop4enz.popstarter.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
@@ -45,8 +44,6 @@ public class CampaignActivity extends NavigationActivity
         CommentsFragment.OnFragmentInteractionListener,
         RewardsFragment.OnFragmentInteractionListener {
 
-    private static final String TAG = "CampaignActivity";
-
     public static final String WS_PATH = "ws://popstarter.herokuapp.com/apiws/websocket";
     public static final String API_WS_TOPIC = "/api/campaign/%d/comments";
     CarouselView carouselView;
@@ -72,7 +69,7 @@ public class CampaignActivity extends NavigationActivity
 
     private Gson gson;
 
-    private int campaignId;
+    private Integer campaignId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +77,12 @@ public class CampaignActivity extends NavigationActivity
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        campaignId = (int) intent.getLongExtra("campaignId", 1);
+        campaignId = (int) intent.getLongExtra("campaignId", 0);
+
+        if (campaignId == 0) {
+            Utils.Toast(this, Utils.ERROR);
+            this.finish();
+        }
 
         gson = new Gson();
 
@@ -169,15 +171,15 @@ public class CampaignActivity extends NavigationActivity
         lifecycleDisposable = stompClient.lifecycle().subscribe(lifecycleEvent -> {
             switch (lifecycleEvent.getType()) {
                 case OPENED:
-                    Log.d(TAG, "Stomp connection opened");
+                    Log.d(Utils.TAG, "Stomp connection opened");
                     break;
 
                 case ERROR:
-                    Log.e(TAG, "Error", lifecycleEvent.getException());
+                    Log.e(Utils.TAG, "Error", lifecycleEvent.getException());
                     break;
 
                 case CLOSED:
-                    Log.d(TAG, "Stomp connection closed");
+                    Log.d(Utils.TAG, "Stomp connection closed");
                     subscribeToWs();
                     break;
             }
@@ -188,7 +190,7 @@ public class CampaignActivity extends NavigationActivity
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(topicMessage
                         -> addCommentToRv(gson.fromJson(topicMessage.getPayload(),
                         Comment.class)), throwable
-                        -> Log.e(TAG, "Error in WS ", throwable));
+                        -> Log.e(Utils.TAG, "Error in WS ", throwable));
     }
 
     private void addCommentToRv(Comment comment) {

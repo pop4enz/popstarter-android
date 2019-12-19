@@ -6,7 +6,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.fragments.CommentsFragment;
 import com.pop4enz.popstarter.fragments.DescriptionFragment;
@@ -16,7 +17,7 @@ import com.pop4enz.popstarter.model.CommentList;
 import com.pop4enz.popstarter.model.Reward;
 import com.pop4enz.popstarter.model.RewardList;
 
-public class CampaignTabsPagerAdapter extends FragmentPagerAdapter {
+public class CampaignTabsPagerAdapter extends FragmentStatePagerAdapter {
 
     DescriptionFragment descriptionFragment;
     CommentsFragment commentsFragment;

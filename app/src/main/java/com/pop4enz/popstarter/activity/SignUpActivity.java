@@ -9,9 +9,7 @@ import android.widget.EditText;
 
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.model.ApiResponse;
-import com.pop4enz.popstarter.model.LoginRequest;
 import com.pop4enz.popstarter.model.SignUpRequest;
-import com.pop4enz.popstarter.model.TokenResponse;
 import com.pop4enz.popstarter.retrofit.RetrofitService;
 import com.pop4enz.popstarter.utils.Utils;
 
@@ -65,7 +63,7 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
                     && Utils.isNotEmpty(password)) {
                 try {
                     RetrofitService.getInstance()
-                            .getJSONApi().signUpRequest(new SignUpRequest(firstName, lastName,
+                            .getApiRequests().signUpRequest(new SignUpRequest(firstName, lastName,
                             username, email, password))
                             .enqueue(new Callback<ApiResponse>() {
                                 @Override

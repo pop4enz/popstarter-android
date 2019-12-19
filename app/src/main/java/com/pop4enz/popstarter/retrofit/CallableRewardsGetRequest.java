@@ -22,7 +22,7 @@ public class CallableRewardsGetRequest implements Callable {
     public Object call() throws Exception {
         try {
             Call<List<Reward>> call = RetrofitService.getInstance()
-                    .getJSONApi().getRewardsByID(campaignId);
+                    .getApiRequests().getRewardsByID(campaignId);
 
             return new RewardList(call.execute().body());
         } catch (Exception e) {

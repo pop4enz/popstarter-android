@@ -13,8 +13,14 @@ import java.util.Locale;
 public final class Utils {
 
     private static final String FULL_TIME_FORMAT ="EEE MMM dd HH:mm:ss";
-    private static final String DEFAULT_IMAGE
+    public static final String DEFAULT_IMAGE
             = "https://sun9-14.userapi.com/c854120/v854120120/179b7e/5MAug30XaaM.jpg";
+    public static final String USER_GET_SUCCESS = "User info fetched successfully!";
+    public static final String BAD_CREDENTIALS = "Wrong E-mail or passwordET!";
+    public static final String ERROR = "Something went wrong :(";
+    public static final String LOGIN_SUCCESS = "You successfully logged on!";
+    public static final String TAG = "POPSTARTER";
+    private static final String BEARER = "Bearer ";
 
     public static String getFormattedDate(Date date) {
             SimpleDateFormat utcFormat = new SimpleDateFormat(FULL_TIME_FORMAT, Locale.ROOT);
@@ -25,8 +31,12 @@ public final class Utils {
         return (string != null && !string.isEmpty());
     }
 
+    public static String buildToken(String token) {
+        return BEARER + token;
+    }
+
     public static void loadImage(String imagePath, ImageView imageView) {
-        if (imagePath != null && !imagePath.isEmpty()) {
+        if (Utils.isNotEmpty(imagePath)) {
             loadImageInto(imagePath, imageView);
         } else {
             loadImageInto(DEFAULT_IMAGE, imageView);

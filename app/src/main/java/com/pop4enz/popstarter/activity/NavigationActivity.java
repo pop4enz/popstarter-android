@@ -1,11 +1,13 @@
 package com.pop4enz.popstarter.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -17,20 +19,33 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.pop4enz.popstarter.R;
+import com.pop4enz.popstarter.model.UserInfo;
+import com.pop4enz.popstarter.retrofit.RetrofitService;
+import com.pop4enz.popstarter.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import info.androidhive.fontawesome.FontDrawable;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public abstract class NavigationActivity extends AppCompatActivity {
 
     private static final int HOME_ID = 2;
-    public static final int PROFILE_ID = 1;
-    public static final int LOGOUT_ID = 3;
-    public static final int SIGN_IN_ID = 4;
-    public static final int SIGN_UP_ID = 5;
+    private static final int PROFILE_ID = 1;
+    private static final int LOGOUT_ID = 3;
+    private static final int SIGN_IN_ID = 4;
+    private static final int SIGN_UP_ID = 5;
+    private static final int CREATE_CAMPAIGN = 6;
+    public static final String LOGOUT_SUCCESS = "You successfully logged out!";
+    public static final String USER_NAME = "userName";
+    public static final String USER_EMAIL = "userEmail";
+    public static final String USER_FNAME = "userFName";
+    public static final String USER_LNAME = "userLName";
+    public static final String USER_ID = "userId";
 
     private Drawer drawer;
     private Boolean isUser;
@@ -50,6 +65,35 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
     private void setIsUser() {
         isUser = storage.getString(getString(R.string.TOKEN), null) != null;
+        if (isUser && storage.getString(USER_NAME, null) == null) {
+            getUserInfo(storage.getString(getString(R.string.TOKEN), null));
+        }
+    }
+
+    private void getUserInfo(String token) {
+        RetrofitService.getInstance().getApiRequests().getUserInfo(Utils.buildToken(token))
+                .enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(@NonNull Call<UserInfo> call, @NonNull Response<UserInfo> response) {
+                UserInfo user = response.body();
+                if (response.isSuccessful()) {
+                    storage.edit().putInt(USER_ID, user.getId()).apply();
+                    storage.edit().putString(USER_NAME, user.getUsername()).apply();
+                    storage.edit().putString(USER_FNAME, user.getFirst_name()).apply();
+                    storage.edit().putString(USER_LNAME, user.getLast_name()).apply();
+                    storage.edit().putString(USER_EMAIL, user.getEmail()).apply();
+                    buildDrawer();
+                    Log.d(Utils.TAG, Utils.USER_GET_SUCCESS);
+                } else {
+                    Log.e(Utils.TAG, Utils.ERROR);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<UserInfo> call, @NonNull Throwable t) {
+                t.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -59,19 +103,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
         buildDrawer();
     }
 
-    private void removeToken() {
-        storage.edit().remove(getString(R.string.TOKEN)).apply();
-    }
-
-    private void logoutClickHandler() {
-        if (isUser) {
-            removeToken();
-            isUser = false;
-        }
-        buildDrawer();
-    }
-
-    private Drawer buildDrawer() {
+    private void buildDrawer() {
 
         List<IDrawerItem> items = loadItems();
 
@@ -94,6 +126,9 @@ public abstract class NavigationActivity extends AppCompatActivity {
                         case SIGN_UP_ID:
                             signUpClickHandler();
                             break;
+                        case CREATE_CAMPAIGN:
+                            createCampaignClickHandler();
+                            break;
                         default:
                             return false;
                     }
@@ -104,7 +139,6 @@ public abstract class NavigationActivity extends AppCompatActivity {
             drawer.addItem(item);
         }
 
-        return drawer;
     }
 
     private AccountHeader buildDrawerHeader() {
@@ -123,10 +157,10 @@ public abstract class NavigationActivity extends AppCompatActivity {
 
     private ProfileDrawerItem buildProfile() {
         return new ProfileDrawerItem()
-                .withName(storage.getString("userFirstName", "Pavel")
-                        + " " + storage.getString("userLastName", "Lomako"))
-                .withEmail(storage.getString("userEmail",
-                        "Pavlik2012konez@gmail.com"));
+                .withName(storage.getString(USER_NAME, "undefined"))
+                .withEmail(storage.getString(USER_EMAIL,
+                        "undefined"))
+                .withIdentifier(0);
     }
 
 
@@ -134,6 +168,8 @@ public abstract class NavigationActivity extends AppCompatActivity {
         List<IDrawerItem> items = new ArrayList<>();
         items.add(buildPrimaryItem(R.string.drawer_item_home, R.string.fa_home_solid, HOME_ID));
         if (isUser) {
+            items.add(buildPrimaryItem(R.string.drawer_item_create_campaign,
+                    R.string.fa_plus_solid, CREATE_CAMPAIGN));
             items.add(buildPrimaryItem(R.string.drawer_item_profile,
                     R.string.fa_users_solid, PROFILE_ID));
             items.add(buildPrimaryItem(R.string.drawer_item_logout,
@@ -145,6 +181,13 @@ public abstract class NavigationActivity extends AppCompatActivity {
                     R.string.fa_user_plus_solid, SIGN_UP_ID));
         }
         return items;
+    }
+
+    private void createCampaignClickHandler() {
+        if (!(this instanceof EditCampaignActivity)) {
+            Intent intent = new Intent(this, EditCampaignActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void signUpClickHandler() {
@@ -167,6 +210,15 @@ public abstract class NavigationActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SignInActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void logoutClickHandler() {
+        if (isUser) {
+            storage.edit().clear().apply();
+            isUser = false;
+        }
+        buildDrawer();
+        Utils.Toast(this, LOGOUT_SUCCESS);
     }
 
     protected SharedPreferences getStorage() {

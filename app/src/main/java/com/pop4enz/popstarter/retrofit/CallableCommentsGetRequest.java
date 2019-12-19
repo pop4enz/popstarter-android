@@ -22,7 +22,7 @@ public class CallableCommentsGetRequest implements Callable {
     public Object call() throws Exception {
         try {
             Call<List<Comment>> call = RetrofitService.getInstance()
-                    .getJSONApi().getCommentsByID(campaignId);
+                    .getApiRequests().getCommentsByID(campaignId);
 
             return new CommentList(call.execute().body());
         } catch (Exception e) {

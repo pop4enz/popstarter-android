@@ -20,7 +20,7 @@ public class CallableCampaignGetRequest implements Callable {
     public Object call() {
         try {
             Call<Campaign> call = RetrofitService.getInstance()
-                    .getJSONApi().getCampaignByID(campaignId);
+                    .getApiRequests().getCampaignByID(campaignId);
             return call.execute().body();
         } catch (Exception e) {
             Log.e("ERROR", e.getMessage());
