@@ -10,20 +10,17 @@ import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.adapter.MiniCampaignAdapter;
 import com.pop4enz.popstarter.model.MiniCampaign;
 import com.pop4enz.popstarter.retrofit.CallableCampaignListRequest;
-import com.pop4enz.popstarter.utils.Utils;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class CampaignListActivity extends NavigationActivity implements MiniCampaignAdapter.OnCampaignListener {
+public class HomeActivity extends NavigationActivity implements MiniCampaignAdapter.OnCampaignListener {
 
-    private RecyclerView campaignListRv;
     private MiniCampaignAdapter miniCampaignAdapter =
             new MiniCampaignAdapter(this);
     private Disposable campaignRequestDisposable;
@@ -34,33 +31,13 @@ public class CampaignListActivity extends NavigationActivity implements MiniCamp
         setContentView(R.layout.activity_campaign_list);
         super.onCreate(savedInstanceState);
 
-        campaignListRv = findViewById(R.id.campaignListRv);
+        RecyclerView campaignListRv = findViewById(R.id.campaignListRv);
         campaignListRv.setLayoutManager(new LinearLayoutManager(this));
         campaignListRv.setAdapter(miniCampaignAdapter);
 
-        Observable.fromCallable(new CallableCampaignListRequest())
+        campaignRequestDisposable = Observable.fromCallable(new CallableCampaignListRequest())
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Object o) {
-                        mapCampaigns((List<MiniCampaign>) o);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Utils.Toast(CampaignListActivity.this, e.getMessage());
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                .subscribe((Consumer<List<MiniCampaign>>) this::mapCampaigns);
     }
 
     @Override

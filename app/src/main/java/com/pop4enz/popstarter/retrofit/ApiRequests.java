@@ -9,6 +9,7 @@ import com.pop4enz.popstarter.model.LoginRequest;
 import com.pop4enz.popstarter.model.MiniCampaign;
 import com.pop4enz.popstarter.model.Reward;
 import com.pop4enz.popstarter.model.SignUpRequest;
+import com.pop4enz.popstarter.model.SupportRequest;
 import com.pop4enz.popstarter.model.TokenResponse;
 import com.pop4enz.popstarter.model.UserInfo;
 
@@ -16,6 +17,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
@@ -58,4 +60,14 @@ public interface ApiRequests {
     Call<Void> updateCampaign(@Header(AUTHORIZATION) String authHeader,
                                                @Path("id") Integer campaignId,
                               @Body CreateCampaignRequest request);
+
+    @POST("campaign/{id}/support")
+    Call<Float> supportCampaign(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id,
+                                               @Body SupportRequest request);
+
+    @DELETE("campaign/delete/{id}")
+    Call<Void> deleteCampaign(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id);
+
+    @POST("campaign/{id}/comments/add")
+    Call<Void> addComment(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id, @Body String content);
 }

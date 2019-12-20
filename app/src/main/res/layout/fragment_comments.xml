@@ -6,13 +6,24 @@
     android:layout_height="match_parent"
     tools:context="com.pop4enz.popstarter.fragments.CommentsFragment">
 
+    <Button
+        android:id="@+id/addComment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#31CE94"
+        android:text="@string/add_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/commentsRv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/addComment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

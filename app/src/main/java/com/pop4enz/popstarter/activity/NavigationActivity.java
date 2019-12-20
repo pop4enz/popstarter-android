@@ -49,7 +49,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
     public static final String TOKEN = "token";
 
     private Drawer drawer;
-    private Boolean isUser;
+    protected Boolean isUser;
     private Toolbar toolbar;
     private SharedPreferences storage;
 
@@ -75,7 +75,7 @@ public abstract class NavigationActivity extends AppCompatActivity {
         }
     }
 
-    private void getUserInfo() {
+    protected void getUserInfo() {
         RetrofitService.getInstance().getApiRequests().getUserInfo(getToken())
                 .enqueue(new Callback<UserInfo>() {
             @Override
@@ -203,8 +203,8 @@ public abstract class NavigationActivity extends AppCompatActivity {
     }
 
     private void homeClickHandler() {
-        if (!(this instanceof CampaignListActivity)) {
-            Intent intent = new Intent(this, CampaignListActivity.class);
+        if (!(this instanceof HomeActivity)) {
+            Intent intent = new Intent(this, HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
         }
@@ -221,9 +221,11 @@ public abstract class NavigationActivity extends AppCompatActivity {
         if (isUser) {
             storage.edit().clear().apply();
             isUser = false;
+            Utils.Toast(this, LOGOUT_SUCCESS);
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }
-        buildDrawer();
-        Utils.Toast(this, LOGOUT_SUCCESS);
     }
 
     protected SharedPreferences getStorage() {

@@ -7,12 +7,14 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.adapter.CommentsAdapter;
@@ -29,11 +31,11 @@ import java.util.Objects;
  * Use the {@link CommentsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CommentsFragment extends Fragment {
+public class CommentsFragment extends Fragment implements View.OnClickListener{
 
     private static final String ARG_PARAM1 = "comments";
 
-    private RecyclerView commentsRv;
+    private int visibility;
 
     private CommentsAdapter commentsAdapter = new CommentsAdapter();
 
@@ -68,7 +70,10 @@ public class CommentsFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        commentsRv = Objects.requireNonNull(getView()).findViewById(R.id.commentsRv);
+        RecyclerView commentsRv = Objects.requireNonNull(getView()).findViewById(R.id.commentsRv);
+        Button addCommentButton = getView().findViewById(R.id.addComment);
+        addCommentButton.setVisibility(visibility);
+        addCommentButton.setOnClickListener(this);
         commentsRv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         commentsRv.setAdapter(commentsAdapter);
         if (comments != null) {
@@ -114,6 +119,19 @@ public class CommentsFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void setButtonVisibility(int value) {
+            visibility = value;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.addComment) {
+            FragmentManager fm = getFragmentManager();
+            addCommentDialogFragment newFragment = new addCommentDialogFragment();
+            newFragment.show(fm, null);
+        }
     }
 
     /**

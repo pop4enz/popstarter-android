@@ -43,6 +43,7 @@ import retrofit2.Response;
 public class EditCampaignActivity extends NavigationActivity implements View.OnClickListener {
 
     public static final String DEFAULT_VIDEO = "https://www.youtube.com/watch?v=XrmEns3sE60";
+    public static final String INVALID_INPUT = "Your input values are invalid! Change them please!";
     private Integer campaignId;
     private Disposable campaignDisposable;
     private Disposable categoryDisposable;
@@ -61,7 +62,7 @@ public class EditCampaignActivity extends NavigationActivity implements View.OnC
         setContentView(R.layout.activity_edit_campaign);
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        campaignId = (int) intent.getLongExtra("campaignId", 0);
+        campaignId = intent.getIntExtra("campaignId", 0);
 
         categorySpinner = findViewById(R.id.categorySpinner);
         campaignTitleET = findViewById(R.id.campaignTitleET);
@@ -115,7 +116,16 @@ public class EditCampaignActivity extends NavigationActivity implements View.OnC
     }
 
     private Boolean isInputValid() {
-        return true;
+        return Utils.isNotEmpty(campaignImageET1.getText().toString())
+                && Utils.isNotEmpty(campaignTitleET.getText().toString())
+                && campaignTitleET.getText().toString().length() > 3
+                && campaignTitleET.getText().toString().length() < 40
+                && Utils.isNotEmpty((String) categorySpinner.getSelectedItem())
+                && Utils.isNotEmpty(campaignDescriptionET.getText().toString())
+                && (campaignDescriptionET.getText().toString()).length() > 10
+                && (campaignDescriptionET.getText().toString()).length() < 255
+                && Utils.isNotEmpty(campaignGoalET.getText().toString())
+                && Utils.isNotEmpty(campaignEndDateET.getText().toString());
     }
 
     private void setInput(CreateCampaignRequest request) throws ParseException {
@@ -132,8 +142,8 @@ public class EditCampaignActivity extends NavigationActivity implements View.OnC
         request.setVideoLink(DEFAULT_VIDEO);
     }
 
-    private void redirectToCampaign() {
-        Intent intent = new Intent();
+    private void redirectToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
@@ -176,7 +186,7 @@ public class EditCampaignActivity extends NavigationActivity implements View.OnC
                     public void onResponse(@NonNull Call<Void> call,
                                            @NonNull Response<Void> response) {
                         if (response.isSuccessful()) {
-                            redirectToCampaign();
+                            redirectToHome();
                         } else {
                             Utils.Toast(EditCampaignActivity.this, Utils.ERROR);
                         }
@@ -189,6 +199,8 @@ public class EditCampaignActivity extends NavigationActivity implements View.OnC
 
                 });
 
+            } else {
+                Utils.Toast(this, INVALID_INPUT);
             }
         }
     }

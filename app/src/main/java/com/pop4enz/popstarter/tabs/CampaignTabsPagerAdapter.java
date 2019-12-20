@@ -14,14 +14,13 @@ import com.pop4enz.popstarter.fragments.DescriptionFragment;
 import com.pop4enz.popstarter.fragments.RewardsFragment;
 import com.pop4enz.popstarter.model.Comment;
 import com.pop4enz.popstarter.model.CommentList;
-import com.pop4enz.popstarter.model.Reward;
 import com.pop4enz.popstarter.model.RewardList;
 
 public class CampaignTabsPagerAdapter extends FragmentStatePagerAdapter {
 
-    DescriptionFragment descriptionFragment;
-    CommentsFragment commentsFragment;
-    RewardsFragment rewardsFragment;
+    private DescriptionFragment descriptionFragment;
+    private CommentsFragment commentsFragment;
+    private RewardsFragment rewardsFragment;
 
     @StringRes
     private static final int[] TAB_TITLES =
@@ -74,8 +73,8 @@ public class CampaignTabsPagerAdapter extends FragmentStatePagerAdapter {
         rewardsFragment.setRewards(rewards);
     }
 
-    public void addReward(Reward reward) {
-        rewardsFragment.addReward(reward);
+    public void setAddCommentVisibility(int value) {
+        commentsFragment.setButtonVisibility(value);
     }
 
     @Override

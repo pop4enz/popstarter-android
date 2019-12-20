@@ -123,15 +123,43 @@
                     android:layout_width="360dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
                     android:background="@color/mainColor"
                     android:text="@string/BACK_CAMPAIGN"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="#000000"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/goal" />
+
+                <Button
+                    android:id="@+id/editCampaign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="26dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="#0BBE00"
+                    android:text="@string/EDIT"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/backCampaignButton" />
+
+                <Button
+                    android:id="@+id/deleteCampaign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="26dp"
+                    android:layout_marginBottom="8dp"
+                    android:backgroundTint="#FF2525"
+                    android:text="@string/DELETE"
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toEndOf="@+id/editCampaign"
+                    app:layout_constraintTop_toBottomOf="@+id/backCampaignButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -163,7 +191,7 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/campaignTabsVp"
                 android:layout_width="match_parent"
-                android:layout_height=" 300dp"
+                android:layout_height="400dp"
                 android:paddingBottom="50dp" />
 
         </LinearLayout>

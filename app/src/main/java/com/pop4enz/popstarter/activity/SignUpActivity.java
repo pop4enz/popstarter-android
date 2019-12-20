@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+
 import com.pop4enz.popstarter.R;
 import com.pop4enz.popstarter.model.ApiResponse;
 import com.pop4enz.popstarter.model.SignUpRequest;
@@ -28,9 +30,6 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
     private EditText usernameET;
     private EditText emailET;
     private EditText passwordET;
-    private Button signUpButton;
-
-    private SharedPreferences storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +41,8 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
         usernameET = findViewById(R.id.signUpUsername);
         emailET = findViewById(R.id.signUpEmail);
         passwordET = findViewById(R.id.signUpPassword);
-        signUpButton = findViewById(R.id.signUpButton);
+        Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(this);
-
-        storage = this.getStorage();
     }
 
     @Override
@@ -67,8 +64,8 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
                             username, email, password))
                             .enqueue(new Callback<ApiResponse>() {
                                 @Override
-                                public void onResponse(Call<ApiResponse> call,
-                                                       Response<ApiResponse> response) {
+                                public void onResponse(@NonNull Call<ApiResponse> call,
+                                                       @NonNull Response<ApiResponse> response) {
                                     if (response.raw().isSuccessful()) {
                                         ApiResponse response1 = response.body();
                                         if (response1.getSuccess()) {
@@ -82,7 +79,7 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
                                 }
 
                                 @Override
-                                public void onFailure(Call<ApiResponse> call, Throwable t) {
+                                public void onFailure(@NonNull Call<ApiResponse> call, @NonNull Throwable t) {
                                     t.printStackTrace();
                                     Utils.Toast(SignUpActivity.this, ERROR);
                                 }
@@ -96,7 +93,7 @@ public class SignUpActivity extends NavigationActivity implements View.OnClickLi
 
     private void handleRegister() {
         Utils.Toast(SignUpActivity.this, REGISTER_SUCCESS);
-        Intent intent = new Intent(this, CampaignListActivity.class);
+        Intent intent = new Intent(this, SignInActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

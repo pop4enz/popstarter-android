@@ -32,4 +32,12 @@
     <string name="goal">Funding goal:</string>
     <string name="date">Expiration date:</string>
     <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="support">Support</string>
+    <string name="value">Value</string>
+    <string name="dialog_back_campaign">Support campaign</string>
+    <string name="add_comment">Add comment</string>
+    <string name="comment">Comment</string>
+    <string name="send">Send</string>
+    <string name="dialog_comment">Write your comment</string>
 </resources>
