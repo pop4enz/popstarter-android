@@ -1,9 +1,5 @@
 package com.pop4enz.popstarter.activity;
 
-import androidx.annotation.NonNull;
-import androidx.viewpager.widget.ViewPager;
-
-import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -25,6 +25,7 @@ import com.pop4enz.popstarter.model.Comment;
 import com.pop4enz.popstarter.model.CommentList;
 import com.pop4enz.popstarter.model.RewardList;
 import com.pop4enz.popstarter.model.SupportRequest;
+import com.pop4enz.popstarter.payload.CommentAddRequestDTO;
 import com.pop4enz.popstarter.retrofit.CallableCampaignGetRequest;
 import com.pop4enz.popstarter.retrofit.CallableCommentsGetRequest;
 import com.pop4enz.popstarter.retrofit.CallableRewardsGetRequest;
@@ -330,8 +331,9 @@ public class CampaignActivity extends NavigationActivity
 
     public void addComment(String value) {
         if (isUser) {
+            CommentAddRequestDTO requestDTO = new CommentAddRequestDTO(value);
             RetrofitService.getInstance().getApiRequests()
-                    .addComment(this.getToken(), campaignId, value)
+                    .addComment(this.getToken(), campaignId, requestDTO)
                     .enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(@NonNull Call<Void> call, @NonNull Response<Void> response) {

@@ -12,6 +12,7 @@ import com.pop4enz.popstarter.model.SignUpRequest;
 import com.pop4enz.popstarter.model.SupportRequest;
 import com.pop4enz.popstarter.model.TokenResponse;
 import com.pop4enz.popstarter.model.UserInfo;
+import com.pop4enz.popstarter.payload.CommentAddRequestDTO;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public interface ApiRequests {
     Call<List<CampaignCategory>> getCategories(@Header(AUTHORIZATION) String authHeader);
 
     @POST("campaign/create")
-    Call<Void> createCampaign(@Header("Authorization") String authHeader,
+    Call<Void> createCampaign(@Header(AUTHORIZATION) String authHeader,
                               @Body CreateCampaignRequest request);
 
     @PATCH("campaign/update/{id}")
@@ -69,5 +70,5 @@ public interface ApiRequests {
     Call<Void> deleteCampaign(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id);
 
     @POST("campaign/{id}/comments/add")
-    Call<Void> addComment(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id, @Body String content);
+    Call<Void> addComment(@Header(AUTHORIZATION) String authHeader, @Path("id") Integer id, @Body CommentAddRequestDTO requestDTO);
 }
